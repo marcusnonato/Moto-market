@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
+import { Teko } from "next/font/google";
 
-const geistMono = localFont({
-  src: "./_fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const teko = Teko({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-teko",
 });
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${geistMono.className}  antialiased`}>{children}</body>
+      <body className={`${teko.className} dark antialiased`}>{children}</body>
     </html>
   );
 }
