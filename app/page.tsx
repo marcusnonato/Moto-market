@@ -1,101 +1,113 @@
 import Image from "next/image";
+import Header from "./_components/header";
+import { Button } from "./_components/ui/button";
+import ProductItem from "./_components/product-item";
+import Footer from "./_components/footer";
 
-export default function Home() {
+import { db } from "./_lib/prisma";
+
+import DesktopCarousel from "./_components/desktop-carousel";
+import { Separator } from "./_components/ui/separator";
+import Link from "next/link";
+import ApresentationContainer from "./_components/apresentation-container";
+import { MotionDiv } from "./_components/animated-component";
+
+export default async function Home() {
+  const products = await db.motorbike.findMany({
+    take: 6,
+  });
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div>
+      <Header />
+      <DesktopCarousel />
+      <ApresentationContainer />
+      <MotionDiv
+        className="hidden lg:block"
+        initial={{ translateX: -1500 }}
+        whileInView={{ translateX: 0 }}
+        transition={{ duration: 1, ease: "backOut" }}
+        viewport={{ once: true }}
+      >
+        <h1 className="mx-4 mt-10 text-center text-[22px] font-bold lg:mt-16 lg:text-5xl">
+          AQUI VOCÊ ENCONTRA UMA VARIEDADE DE MOTOS YAMAHA
+        </h1>
+      </MotionDiv>
+      <MotionDiv
+        className="lg:hidden"
+        initial={{ scale: 0 }}
+        whileInView={{ scale: 1 }}
+        transition={{ ease: "backOut", duration: 1 }}
+        viewport={{ once: true }}
+      >
+        <h1 className="mx-4 mt-10 text-center text-[22px] font-bold lg:mt-16 lg:text-5xl">
+          AQUI VOCÊ ENCONTRA UMA VARIEDADE DE MOTOS YAMAHA
+        </h1>
+      </MotionDiv>
+      <div className="relative mx-auto mt-12 h-[75px] w-[75px] lg:hidden">
         <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+          className="object-contain"
+          src="/moto-icon.png"
+          alt="Moto Icon"
+          fill
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      </div>
+      <div className="mt-6 flex items-center justify-between px-4 lg:mt-32 lg:px-32">
+        <div className="w-full">
+          <h1 id="last" className="text-2xl font-bold lg:text-5xl">
+            ÚLTIMOS MODELOS
+          </h1>
+          <Separator className="h-[2px] w-full bg-primary" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Button
+          variant="link"
+          className="text-lg text-black hover:text-primary dark:text-white lg:hidden"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <a href="/products">Ver tudo</a>
+        </Button>
+      </div>
+      <div className="mb-14 mt-8 grid grid-cols-1 justify-items-center gap-12 px-32 lg:mt-20 lg:grid-cols-2 xl:grid-cols-3">
+        {products.map((product, index) => (
+          <MotionDiv
+            key={product.id}
+            viewport={{ margin: "-80px", once: true }}
+            initial={{ scale: 0.5, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3, delay: index * 0.07 }}
+          >
+            <ProductItem key={product.id} product={product} />
+          </MotionDiv>
+        ))}
+      </div>
+      <Link href="/products">
+        <Button className="mx-auto hidden h-12 px-12 text-xl lg:flex">
+          VER TODOS MODELOS
+        </Button>
+      </Link>
+      <div id="localization" className="mb-12 mt-20 flex flex-col gap-2">
+        <p className="text-center text-lg text-primary lg:text-2xl">ENDEREÇO</p>
+        <h1 className="mb-4 text-center text-2xl font-bold lg:text-5xl">
+          ONDE ME ENCONTRAR
+        </h1>
+        <div className="mx-4 rounded-xl bg-white px-4 py-4 shadow-lg lg:mx-auto lg:w-96">
+          <h1 className="mb-4 text-center text-2xl text-black">UNIDADE NOME</h1>
+          <p className="text-center font-sans text-xs font-bold text-black">
+            Av. Nome da Rua, 1234 - Bairro - Cidade - Estado
+          </p>
+          <p className="mb-6 text-center font-sans text-xs font-bold text-black">
+            Horário de funcionamento: 08:00 - 18:00
+          </p>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.037582405219!2d-60.074991323716716!3d-3.08464479689102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x926c11b4d40a6f03%3A0x333f25f54b616baf!2sShopping%20Ponta%20Negra!5e0!3m2!1spt-BR!2sbr!4v1738530879455!5m2!1spt-BR!2sbr"
+            width="100%"
+            height="120"
+            style={{ border: 0 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }
