@@ -1,3 +1,4 @@
+import { CategoryChoices } from "@prisma/client";
 import { MotionDiv } from "../_components/animated-component";
 import BottomSheet from "../_components/bottomSheet";
 import Footer from "../_components/footer";
@@ -14,7 +15,7 @@ import { Separator } from "../_components/ui/separator";
 
 interface ProductsProps {
   searchParams: {
-    category: string;
+    category: CategoryChoices;
   };
 }
 

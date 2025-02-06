@@ -1,9 +1,10 @@
+import { CategoryChoices } from "@prisma/client";
 import { db } from "../_lib/prisma";
 import { MotionDiv } from "./animated-component";
 import ProductItem from "./product-item";
 
 interface ProductListProps {
-  category?: string;
+  category?: CategoryChoices;
 }
 
 async function ProductList({ category }: ProductListProps) {
