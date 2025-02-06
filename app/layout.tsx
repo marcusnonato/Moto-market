@@ -3,7 +3,7 @@ import "./globals.css";
 import { Teko } from "next/font/google";
 
 const teko = Teko({
-  weight: ["400", "700"],
+  weight: ["400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-teko",
 });
@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${teko.className} dark antialiased`}>{children}</body>
+      <body className={`${teko.className} font-medium antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
