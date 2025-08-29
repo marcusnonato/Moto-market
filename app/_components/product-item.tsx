@@ -36,22 +36,22 @@ function ProductItem({ product }: ProductItemProps) {
           {formatCurrency(Number(product.price))}
         </h1>
       </div>
-      <Link
-        href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
-        target="_blank"
+
+      <Button
+        asChild
+        size="lg"
+        className="mt-2 w-36 text-lg font-medium text-white"
       >
-        <Button size="lg" className="mt-2 w-36 text-lg font-medium text-white">
+        <Link
+          href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
+          target="_blank"
+        >
           Tenho interesse
-        </Button>
-      </Link>
+        </Link>
+      </Button>
       <Dialog>
-        <DialogTrigger>
-          <Button
-            size="lg"
-            className="w-36 bg-black text-lg font-medium text-white"
-          >
-            Características
-          </Button>
+        <DialogTrigger className="h-10 w-36 rounded-md bg-black text-lg font-medium text-white hover:opacity-90">
+          Características
         </DialogTrigger>
         <DialogContent className="flex h-screen w-screen max-w-none flex-col items-center overflow-scroll bg-white pb-20 lg:h-fit lg:w-[1200px] lg:overflow-auto lg:px-20">
           <h1 className="mt-4 text-3xl font-bold text-gray lg:hidden">
@@ -70,24 +70,32 @@ function ProductItem({ product }: ProductItemProps) {
               <h1 className="mt-4 text-4xl font-bold text-gray">
                 {product?.name}
               </h1>
-              <Link
-                href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
-                target="_blank"
+
+              <Button
+                asChild
+                className="mt-8 self-center px-8 py-7 text-xl font-bold text-white"
               >
-                <Button className="mt-8 self-center px-8 py-7 text-xl font-bold text-white">
+                <Link
+                  href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
+                  target="_blank"
+                >
                   Tenho interesse
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
-          <Link
-            href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
-            target="_blank"
+
+          <Button
+            asChild
+            className="mt-8 self-center px-8 py-6 text-lg font-bold text-white lg:hidden"
           >
-            <Button className="mt-8 self-center px-8 py-6 text-lg font-bold text-white lg:hidden">
+            <Link
+              href={`https://wa.me/5592995263569?text=Olá,%20quero%20saber%20mais%20sobre%20a%20${product?.name}`}
+              target="_blank"
+            >
               Tenho interesse
-            </Button>
-          </Link>
+            </Link>
+          </Button>
           <div className="mt-12 flex flex-col items-center justify-center gap-3 lg:hidden">
             <h1 className="text-xl font-bold">Características</h1>
             <ChevronDownIcon />
