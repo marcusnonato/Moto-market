@@ -18,7 +18,7 @@ function Header({ isMenuOpen }: HeaderProps) {
   return (
     <div>
       <div className="flex items-center justify-between px-[550px] text-xl font-bold max-lg:hidden">
-        <Link className="hover:text-primary" href="">
+        <Link className="hover:text-primary" href="/">
           INÍCIO
         </Link>
         <Link className="hover:text-primary" href="/products">
@@ -34,7 +34,7 @@ function Header({ isMenuOpen }: HeaderProps) {
             <Image src="/logo-dark.png" alt="Logo" width={90} height={90} />
           </Link>
         </div>
-        <Link className="hover:text-primary" href="#localization">
+        <Link className="hover:text-primary" href="/#localization">
           LOCALIZAÇÃO
         </Link>
         <Link
